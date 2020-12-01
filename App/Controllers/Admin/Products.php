@@ -161,37 +161,41 @@ class Products extends \Core\Controller
     public function edit ($parmas)
     {
         $product = $this->general_db->get( '*', $this->product_db->tabel, 'WHERE id = '. $parmas['item_id'] .'', 'ASSOC', true );
-        $cats = $this->general_db->get( '*', 'categories', '', 'ASSOC');
         
-        // Init Data array
-        $data = [];
-        
-        // Add products to Data array
-        $data['product'] = $product;
-
-        // Init product record to unserialize
-        $serialized_arr = [ 'size' ];
-
-        // unserialize serialized records
-        for( $i = 0; $i < count( $serialized_arr ); $i++ ):
-            $data['product'][$serialized_arr[$i]] = unserialize($data['product'][$serialized_arr[$i]]);
-        endfor;
-
-        // init categories array
-        $data['cats'] = $cats;
-        // init $_POST values array
-        $data['post'] = [];
-
-        $date = new DateTime($product['date']);
-        $data['product']['date'] = $date->format('d-m-Y');
-
-        // No Cayegory has that id
+        // No Product has that id || item_id does not exist in the query
         if( ! $product || ! isset($parmas['item_id']) ) {
             // Warning msg
             flash( 'products_actions', 'NO Product Found', 'danger' );
             // redirect back
             redirect('admin/products/all');
         }
+        
+        // Get Categries id, name
+        $cats = $this->general_db->get( 'id, name', 'categories', '', 'ASSOC');
+        
+        // Init Data array
+        $data = [];
+        
+        // Add products to data array
+        $data['product'] = $product;
+
+        // Add categories to data array
+        $data['cats'] = $cats;
+
+        // init $_POST values holder array
+        $data['post'] = [];
+
+        // Init product record to unserialize
+        $serialized_arr = [ 'size', 'gallery' ];
+
+        // unserialize serialized product array item
+        for( $i = 0; $i < count( $serialized_arr ); $i++ ):
+            $data['product'][$serialized_arr[$i]] = unserialize($data['product'][$serialized_arr[$i]]);
+        endfor;
+
+        // Format product create date
+        $date = new DateTime($product['date']);
+        $data['product']['date'] = $date->format('d-m-Y');
 
         // If form is submitted
         if( $_SERVER['REQUEST_METHOD'] === 'POST' ){

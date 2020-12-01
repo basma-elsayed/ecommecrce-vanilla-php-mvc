@@ -193,6 +193,25 @@ get_admin_file("header");
                 </div>
                 <!-- Product Image -->
 
+                <?php if( !is_null( $data['product']['gallery'] ) ): ?>
+                <div class="card card-body">
+                    <h3 class="h3 mb-3">Product Gallery</h3>
+                    <div class="row">
+                    <?php for( $i = 0; $i < count($data['product']['gallery']); $i++ ): ?>
+                    <!-- Start Display product gallery  -->
+                    <div class="product-img col-lg-3">
+                        <img class="product__img img-thumbnail" src="<?php echo get_img( 'products/' . $data['product']['gallery'][$i] ); ?>" alt="" srcset="">
+                        <input type="hidden" name="old_primg" value="<?php echo $data['product']['gallery'][$i]; ?>">
+                    </div>
+                    <!-- End Display product gallery  -->
+                    <?php endfor; ?>
+                    </div>
+                    <div class="mt-3">
+                        <a href="#" class="btn btn-link btn-primary">Update Gallery</a>
+                    </div>
+                </div>
+                <?php endif; ?>
+
                 <!-- Start Colors & Material -->
                 <div class="card">
                     <div class="card-body">
