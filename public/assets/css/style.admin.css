@@ -1,0 +1,34 @@
+/**
+    styles
+**/
+.full-height {
+    min-height: auto;
+}
+
+.select-wrapper.is-valid .valid-feedback {
+    display: block;
+    color: #00c9a7;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 80%;
+}
+
+.select-wrapper.is-invalid .invalid-feedback {
+    display: block;
+    color: #de4436;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 80%;
+}
+
+.header .logo>a {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.page-container .page-header.no-gutters {
+    margin-left: 0px;
+    margin-right: 0px;
+}
