@@ -115,6 +115,8 @@ class product
                                 description = :description,
                                 price = :price,
                                 sale = :sale,
+                                image = :image,
+                                gallery = :gallery,
                                 cat_id = :cat_id,
                                 status = :status,
                                 size = :size,
@@ -128,6 +130,9 @@ class product
         $this->dbh->bind( ':name' , $data['name'] );
         $this->dbh->bind( ':description' , $data['description'] );
         $this->dbh->bind( ':price' , $data['price'] );
+        $this->dbh->bind( ':image' , empty($data['img']) ? $data['old_img'] : $data['img']  );
+        $this->dbh->bind( ':gallery' , serialize($data['gallery'])  );
+        // $this->dbh->bind( ':gallery' , empty($data['gallery']['name']) ? $data['old_gallery'] : serialize($data['gallery'])  );
         $this->dbh->bind( ':sale' , $data['sale'] );
         $this->dbh->bind( ':cat_id' , intval($data['cat_id']) );
         $this->dbh->bind( ':status' , $data['status'] );

@@ -29,7 +29,7 @@
 
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="<?php echo URL; ?>/admin/profile/edit">Edit</a>
+                        <a href="<?php echo URL; ?>admin/profile/edit">Edit</a>
                     </li>
                 </ul>
 

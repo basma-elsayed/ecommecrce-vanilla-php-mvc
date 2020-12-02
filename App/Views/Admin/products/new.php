@@ -182,7 +182,7 @@ get_admin_file( "header" );
                         type="file"
                         name="product_single_image"
                         id="product_single_image" />
-                    <div class="invalid-feedback"> <?php echo error_msg( $data['post'], 'img_err' );?></div>
+                    <div class="invalid-feedback"> <?php echo error_msg( $data['post'], 'image_err' );?></div>
                     <div class="valid-feedback"> <?php echo success_msg( $data['post'], 'img_success' );?> </div>
                 </div>
             </div>

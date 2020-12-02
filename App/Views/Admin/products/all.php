@@ -66,7 +66,7 @@ get_admin_file("header");
                                     </td>
                                     <td>
                                         <span class="d-lg-inline-block">
-                                            <a  href="<?php echo URL; ?>/admin/products/edit?item_id=<?php echo $product['id']; ?>" 
+                                            <a  href="<?php echo URL; ?>admin/products/edit?item_id=<?php echo $product['id']; ?>" 
                                                 class="d-lg-inline-block btn btn-md btn-primary mb-1 mb-lg-0 mt-3 m-lg-0 m-r-5">
                                                 <i class="anticon anticon-edit"></i>   
                                                 <span>Edit</span>   

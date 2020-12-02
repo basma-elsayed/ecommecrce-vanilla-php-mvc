@@ -10,7 +10,7 @@ define( 'PATH', dirname( __DIR__) );
 
 define( 'PUBLIC_PATH', dirname( __DIR__ , 2) . '/public' );
 
-define( 'URL', 'http://localhost/ecommecrce-vanilla-php-mvc/' );
+define( 'URL', 'http://localhost/ecomm-mvc/' );
 
 define( 'FUNC', PATH . '/functions' . '/' );
 

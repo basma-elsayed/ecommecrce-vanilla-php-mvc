@@ -7,7 +7,7 @@ get_admin_file("header");
 <div class="conatiner">
 
     <!-- Start from -->
-    <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST">
+    <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" enctype="multipart/form-data">
         <div class="row">
             <!-- Page Header -->
             <div class="col-lg-12 mt-5">
@@ -182,13 +182,21 @@ get_admin_file("header");
                     <h3 class="h3 mb-3">Product Image</h3>
                     <div class="product-img">
                         <img class="product__img" src="<?php echo get_img( 'products/' . $data['product']['image'] ); ?>" alt="" srcset="">
-                        
-                        <div class="mt-3">
-                            <a href="#" class="btn btn-link btn-primary">Update image</a>
+                        <input type="hidden" name="image" value="<?php echo $data['product']['image']; ?>">
+                    </div>
+                    <div class="mt-3">
+                        <div class="custom-file">
+                            <a href="#" class="custom-file-btn btn btn-link btn-primary">
+                                <span>Update image</span>
+                            
+                                <input  
+                                    class="custom-file-input <?php echo error_class( $data['post'], 'img_err' ); ?>"
+                                    type="file" name="new_single_primg">
+                                <div class="invalid-feedback"> <?php echo error_msg( $data['post'], 'img_err' );?></div>
+                                <div class="valid-feedback"> <?php echo success_msg( $data['post'], 'img_success' );?> </div>
+                            </a>
+                                
                         </div>
-
-                        <input type="hidden" name="old_primg" value="<?php echo $data['product']['image']; ?>">
-                    
                     </div>
                 </div>
                 <!-- Product Image -->
@@ -198,16 +206,21 @@ get_admin_file("header");
                     <h3 class="h3 mb-3">Product Gallery</h3>
                     <div class="row">
                     <?php for( $i = 0; $i < count($data['product']['gallery']); $i++ ): ?>
-                    <!-- Start Display product gallery  -->
-                    <div class="product-img col-lg-3">
-                        <img class="product__img img-thumbnail" src="<?php echo get_img( 'products/' . $data['product']['gallery'][$i] ); ?>" alt="" srcset="">
-                        <input type="hidden" name="old_primg" value="<?php echo $data['product']['gallery'][$i]; ?>">
-                    </div>
-                    <!-- End Display product gallery  -->
+                        <!-- Start Display product gallery  -->
+                        <div class="product-img col-lg-3">
+                            <img class="product__img img-thumbnail" src="<?php echo get_img( 'products/' . $data['product']['gallery'][$i] ); ?>" alt="" srcset="">
+                            <input type="hidden" name="old_prgallery[]" value="<?php echo $data['product']['gallery'][$i]; ?>">
+                        </div>
+                        <!-- End Display product gallery  -->
                     <?php endfor; ?>
                     </div>
                     <div class="mt-3">
-                        <a href="#" class="btn btn-link btn-primary">Update Gallery</a>
+                        <div class="custom-file">
+                            <a href="#" class="custom-file-btn btn btn-link btn-primary">
+                                <span>Update Gallery</span>
+                                <input type="file" name="new_gallery_primg[]" class="custom-file-input" multiple>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <?php endif; ?>

@@ -80,11 +80,13 @@ class Uploader
 
     /**
      * Move to Specified images path
+     * @param array $gallery contains name && tmp_name
+     * @param string $path path to products dir
      */
     public static function CompleteUploadingGalleryProccess(array $gallery, string $path)
     {
 
-        for ($i=0; $i < count($gallery) ; $i++) { 
+        for ($i= 0; $i < count($gallery) ; $i++) { 
             // image path
             $img_path   = $path . $gallery[$i]['name'];
             $tmp        = $gallery[$i]['tmp'];
@@ -112,8 +114,8 @@ class Uploader
 
                 // Validate Image exts
                 $img_name = explode( ".", strtolower( $gallery['name'][$i] ));
-                $img_ext = end($img_name);
-                if( ! in_array( $img_ext,  self::$default_exts ) ){
+                self::$img_ext = end($img_name);
+                if( ! in_array( self::$img_ext,  self::$default_exts ) ){
                     self::$data['gellery_ext_err'][$i] = 'Not allowed image extention for '. $gallery['name'][$i] .', Please upload extions like [ jpeg, jpg, png ]';
                     self::$galleryErrors++;
                 }
@@ -133,7 +135,6 @@ class Uploader
                     ];
 
                     $product_gallery[] = self::$gallery_arr[$i]['name'];
-                    // $product_gallery['primg_'. $i] = self::$gallery_arr[$i]['name'];
                 }
             
             endif;
@@ -161,6 +162,7 @@ class Uploader
 
     /**
      * Delete Exist image
+     * @param array $gallery contains exist gallery images name
      */
     public static function DeleteGallery($gallery, $path)
     {

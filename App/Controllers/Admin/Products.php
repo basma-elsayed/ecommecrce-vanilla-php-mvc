@@ -214,6 +214,8 @@ class Products extends \Core\Controller
                 'cat_id'            => trim($_POST['category']),
                 'size'              => $_POST['size'] ? $_POST['size'] : '',
                 'brand'             => trim($_POST['brand']),
+                'image'             => $_FILES['new_single_primg'],
+                'gallery'           => $_FILES['new_gallery_primg']
             ];
 
             /**
@@ -221,10 +223,15 @@ class Products extends \Core\Controller
              * 1- Compare POST values to $product values
              * 2- Store chaged keys and values into $diff array
              * 3- Validate the field(s) which user has changed and update it 
-             */ 
+             */
+
             // $optional_fields
-            $optional_fields = [ 'sale' ];
-            // Compare two arrays values
+            $optional_fields = [ 'sale', 'image', 'gallery' ];
+
+            /**
+             * Compare POST values to $product values
+             * Get the fields that has changed
+             */
             $diffs = [];
             foreach( $data['post'] as $key => $value ){
                 if( $data['product'][$key] !== $value ){
@@ -234,14 +241,15 @@ class Products extends \Core\Controller
 
             // User has update field(s)
             $updated = ( count($diffs) > 0 ) ? true : false;
+
             // Output msg [ Profile has nothing changed ]
             if( ! $updated ){
                 flash( 'products_actions' , 'Product has nothing changed' , 'warning text-center' );
             }else{
 
+                // Errors Counter
                 $errors = 0;
                 if( $updated ):
-
                     foreach( $diffs as $input => $value  ):
                         // if empty
                         if( empty( $diffs[$input] ) && ! in_array( $input, $optional_fields ) ):
@@ -257,18 +265,34 @@ class Products extends \Core\Controller
                                         $data['post'][$input . '_err'] = ucwords($input) . ' must be under 300 Characters';
                                         $errors++;
                                     }
-                                    else{
-                                        $data['post']['description_success'] = 'Looks Good!';
-                                    }
+                                break;
+
+                                // Validate single image
+                                case 'image':
+                                    if( $_FILES['new_single_primg']['error'] === 0 ):
+                                        $uplaoder = Uploader::UplaodeSingleImage( $_FILES['new_single_primg'], $data['post'] );
+                                        $data['post'] = $uplaoder['data'];
+                                        $errors += $uplaoder['errors'];
+                                    endif;
+                                break;
+                                // Validate Gallery
+                                case 'gallery':
+                                    if( $_FILES['new_gallery_primg']['error'][0] === 0 ):
+                                        // Update Gallery
+                                        $GalleryUplaoder = Uploader::UplaodeMultipleImage($_FILES['new_gallery_primg'], $data['post']);
+                                        $data['post']                   = $GalleryUplaoder['data'];
+                                        $data['post']['gallery']        = $GalleryUplaoder['gallery'];
+                                        $errors                         += $GalleryUplaoder['errors'];
+                                        $gallery_arr                    = $GalleryUplaoder['gallery_arr'];
+                                    endif;
                                 break;
                             endswitch;
 
                         endif;
 
-                        // Update product obj`s matched values
-                        $data['product'][$input] = $data['post'][$input];
+                        // Update product matched key values
+                        if( $input !== 'image' && $input !== 'gallery' ) $data['product'][$input] = $data['post'][$input];
                     endforeach;
-
                 endif;
 
                 //  update the changed values
@@ -277,12 +301,48 @@ class Products extends \Core\Controller
                     /**
                      * Update values
                      * On Success:
-                     * Redirect to All Categories page 
+                     * Redirect to All Products page 
                      * Flash Success msg
                      * On Failure:
                      * Flash Faild msg
                      */
+                    $data['post']['old_img'] = $data['product']['image'];
+                    
+                    $gallery_updated = true;
+                    // Check if gallery update
+                    if( array_key_exists( 'name', $data['post']['gallery'] ) ){
+                        // user dose not update the gallery
+                        // gallery === old gallery
+                        $data['post']['gallery'] = $data['product']['gallery'];
+                        $gallery_updated = false;
+                    }
+            
                     if( $this->product_db->update( $data['post'], $parmas['item_id'] ) ){
+
+                        // Update single img
+                        if( ! empty($data['post']['img']) ){
+                            // Imgs Path 
+                            $img_path = IMGS . 'products/';
+
+                            // Delete old images
+                            Uploader::DeleteImage($img_path . $data['product']['image']);
+
+                            // uplaod new images
+                            Uploader::CompleteUploadingProccess( $img_path );
+                        }
+
+                        // Update Gallery img
+                        if( $gallery_updated ){
+                            // Imgs Path 
+                            $img_path = IMGS . 'products/';
+
+                            // Delete old images
+                            Uploader::DeleteGallery($data['product']['gallery'], $img_path);
+
+                            // uplaod new images
+                            Uploader::CompleteUploadingGalleryProccess($gallery_arr, $img_path );
+                        }
+
                         // falsh success msg
                         flash( 'products_actions', 'Product '.$data['post']['name'].' updated successfully', 'success' );
                         // Redirect to update page
