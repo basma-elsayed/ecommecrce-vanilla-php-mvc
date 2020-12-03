@@ -28,7 +28,7 @@ class Categories extends \Core\Controller
     public function all()
     {
         // init $data array
-        $data = $this->general_db->get( '*', $this->cats_db->tabel );
+        $data = $this->general_db->get( '*', $this->cats_db->tabel, 'ORDER BY id DESC' );
 
         if( empty($data) ){
             $result      = '<h3 class="text-center mt-5">NO Categries Found</h3>';

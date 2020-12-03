@@ -37,22 +37,21 @@ class Shop extends \Core\Controller
 
         // Check Product exist
         if( empty($product) ) {
-            // Redirect to shop ;
+            // Redirect to shop
+            redirect('front/shop');
         }
-        
-        // Init data array
-        $data = [];
 
         // unserlize serlized item
         $serilized_arr = [ 'gallery' => '' , 'size' => '' ];
         foreach( $serilized_arr as $key => $val ):
             $product[$key] = unserialize( $product[$key] );
         endforeach;
-
         
+        // Init data array
+        $data = [];
+
+        // Init product array
         $data['product'] = $product;
-
-
           
         // Load Single Product View
         $this->views( 'Front/single-product.php', $data );

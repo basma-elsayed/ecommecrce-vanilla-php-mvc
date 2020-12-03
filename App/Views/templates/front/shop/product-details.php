@@ -1,8 +1,7 @@
 <?php ob_start(); ?>
 <pre>
 <?php
-$product = unserialize('a:2:{i:0;s:23:"primg_5fc5cdc262006.jpg";i:1;s:23:"primg_5fc5cdc26200f.jpg";}');
-print_r($product);
+// print_r($data['product']);
 ?>
 </pre>
 
@@ -12,30 +11,33 @@ print_r($product);
             <div class="col-lg-6 col-md-6">
                 <div class="product-details-tab">
                     <div class="pro-dec-big-img-slider">
-                        <!-- <div class="easyzoom-style">
+                        <div class="easyzoom-style">
                             <div class="easyzoom easyzoom--overlay">
-                                <a href="assets/images/product-details/b-large-1.jpg">
+                                <a href="<?php echo get_img( 'products/' . $data['product']['image'] ); ?>">
                                     <img src="<?php echo get_img( 'products/' . $data['product']['image'] ); ?>" alt="" />
                                 </a>
                             </div>
                             <a class="easyzoom-pop-up img-popup" href="<?php echo get_img( 'products/' . $data['product']['image'] ); ?>"><i class="icon-size-fullscreen"></i></a>
-                        </div> -->
+                        </div>
                         <?php for ($i=0; $i < count($data['product']['gallery']) ; $i++): ?>
                             <div class="easyzoom-style">
                                 <div class="easyzoom easyzoom--overlay">
-                                    <a href="<?php echo get_img( 'products/' . $data['product']['gallery'][$i]['name'] ); ?>">
-                                        <img src="<?php echo get_img( 'products/' . $data['product']['gallery'][$i]['name'] ); ?>"/>
+                                    <a href="<?php echo get_img( 'products/' . $data['product']['gallery'][$i] ); ?>">
+                                        <img src="<?php echo get_img( 'products/' . $data['product']['gallery'][$i] ); ?>"/>
                                     </a>
-                                </div>primg_5fc3e87a7313a.jpg
-                                <a class="easyzoom-pop-up img-popup" href="<?php echo get_img( 'products/' . $data['product']['gallery'][$i]['name'] ); ?>"><i class="icon-size-fullscreen"></i></a>
+                                </div>
+                                <a class="easyzoom-pop-up img-popup" href="<?php echo get_img( 'products/' . $data['product']['gallery'][$i] ); ?>"><i class="icon-size-fullscreen"></i></a>
                             </div>
                         <?php endfor; ?>
                         
                     </div>
                     <div class="product-dec-slider-small product-dec-small-style1">
+                        <div class="product-dec-small active">
+                            <img src="<?php echo get_img( 'products/' . $data['product']['image'] ); ?>" alt="" />
+                        </div>
                         <?php for ($i=0; $i < count($data['product']['gallery']) ; $i++):  ?>
                             <div class="product-dec-small active">
-                                <img src="<?php echo get_img( 'products/' . $data['product']['gallery'][$i]['name'] ); ?>" alt="" />
+                                <img src="<?php echo get_img( 'products/' . $data['product']['gallery'][$i] ); ?>" alt="" />
                             </div>
                         <?php endfor; ?>
                     </div>
@@ -64,8 +66,12 @@ print_r($product);
                     </div>
                     <p>Seamlessly predominate enterprise metrics without performance based process improvements.</p>
                     <div class="pro-details-price">
-                        <span class="new-price">$75.72</span>
-                        <span class="old-price">$95.72</span>
+                        <?php if( $data['product']['sale'] != 0  ): ?>
+                        <span class="new-price"><?php echo $data['product']['sale']; ?></span>
+                        <span class="old-price"><?php echo $data['product']['price']; ?></span>
+                            <?php else: ?>
+                        <span class="new-price"><?php echo $data['product']['price']; ?></span>
+                        <?php endif; ?>
                     </div>
                     <div class="pro-details-color-wrap">
                         <span>Color:</span>
@@ -84,11 +90,9 @@ print_r($product);
                         <span>Size:</span>
                         <div class="pro-details-size-content">
                             <ul>
-                                <li><a href="#">XS</a></li>
-                                <li><a href="#">S</a></li>
-                                <li><a href="#">M</a></li>
-                                <li><a href="#">L</a></li>
-                                <li><a href="#">XL</a></li>
+                                <?php for( $i = 0; $i < count($data['product']['size']); $i++ ): ?>
+                                    <li><a href="#"><?php echo strtolower($data['product']['size'][$i]); ?></a></li>
+                                <?php endfor; ?>
                             </ul>
                         </div>
                     </div>
@@ -100,8 +104,14 @@ print_r($product);
                     </div>
                     <div class="product-details-meta">
                         <ul>
-                            <li><span>Categories:</span> <a href="#">Woman,</a> <a href="#">Dress,</a> <a href="#">T-Shirt</a></li>
-                            <li><span>Tag: </span> <a href="#">Fashion,</a> <a href="#">Mentone</a> , <a href="#">Texas</a></li>
+                            <li><span>Categories:</span> 
+                                <a href="<?php echo URL . 'front/categories?cat_id=' . $data['product']['id']; ?>"><?php echo GetCatName( intval($data['product']['cat_id']) ); ?></a>
+                            </li>
+                            <li><span>Tag: </span> 
+                                <a href="#">Fashion,</a>
+                                <a href="#">Mentone</a> , 
+                                <a href="#">Texas</a>
+                            </li>
                         </ul>
                     </div>
                     <div class="pro-details-action-wrap">

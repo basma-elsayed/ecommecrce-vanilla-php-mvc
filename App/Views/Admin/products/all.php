@@ -41,6 +41,7 @@ get_admin_file("header");
                             <th>Brand</th>
                             <th>Status</th>
                             <th>Size</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,10 +49,10 @@ get_admin_file("header");
                             foreach( $data as $product ): ?>
                                 
                                 <tr>
-                                    <td> <?php echo $product['name']; ?> </td>
+                                    <td> <?php echo $product['name']; ?></td>
                                     <td> <?php echo excerpt( $product['description'] ); ?> </td>
                                     <td> <?php echo $product['price']; ?> </td>
-                                    <td> <?php echo ! is_null($product['sale']) ? $product['sale'] : 'out of sale'; ?> </td>
+                                    <td> <?php echo intval($product['sale']) !== 0 ? $product['sale'] : 'out of sale'; ?> </td>
                                     <td> <?php echo $product['cat_name']; ?> </td>
                                     <td> <?php echo $product['author_name']; ?> </td>
                                     <td> <?php echo $product['brand']; ?> </td>
@@ -65,6 +66,7 @@ get_admin_file("header");
                                         <?php endfor; ?>
                                     </td>
                                     <td>
+                                        <!-- Edit Product link -->
                                         <span class="d-lg-inline-block">
                                             <a  href="<?php echo URL; ?>admin/products/edit?item_id=<?php echo $product['id']; ?>" 
                                                 class="d-lg-inline-block btn btn-md btn-primary mb-1 mb-lg-0 mt-3 m-lg-0 m-r-5">
@@ -72,7 +74,8 @@ get_admin_file("header");
                                                 <span>Edit</span>   
                                             </a>
                                         </span>
-
+                                        
+                                        <!-- Delete Product link -->
                                         <span class="d-lg-inline-block">
                                             <a  href="<?php echo URL; ?>admin/products/delete?item_id=<?php echo $product['id']; ?>" 
                                                 class="btn btn-md btn-danger mt-3 m-lg-0 m-r-5">
@@ -80,6 +83,13 @@ get_admin_file("header");
                                                 <span>Delete</span>
                                             </a>
                                         </span>
+
+                                        <!-- Product Link -->
+                                        <a 
+                                            href="<?php echo URL . 'front/shop?p_id='. $product['id']?>"
+                                            target="_blank" 
+                                            class="btn btn-success">View
+                                        </a>
 
                                     </td>
                                 </tr>

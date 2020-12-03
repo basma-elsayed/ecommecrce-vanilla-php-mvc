@@ -2,6 +2,9 @@
 /**
  * Functions commenly used in front end
  */
+use \Models\general;
+$general_db = new general();
+
 
  /**
   * Require Front end file.
@@ -36,5 +39,16 @@ function GetSizes()
         endforeach;
     endforeach;
     return $total;
+}
+
+/**
+ * Get category name by ID
+ * @param int Category ID
+ */
+function GetCatName( int $cat_id )
+{
+    global $general_db;
+    $cat = $general_db->get( 'name', 'categories', 'WHERE id = '.$cat_id.' ', 'ASSOC', true );
+    return $cat['name'];
 }
 
