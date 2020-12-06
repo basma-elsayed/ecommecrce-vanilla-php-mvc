@@ -1,5 +1,6 @@
 <?php ob_start(); ?>
-<form action="#">
+<?php if( GetCartProducts() ): ?>
+<form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST">
     <div class="table-content table-responsive cart-table-content">
         <table>
             <thead>
@@ -13,22 +14,24 @@
                 </tr>
             </thead>
             <tbody>
+            <?php foreach( GetCartProducts() as $index ): ?>
                 <tr>
                     <td class="product-thumbnail">
-                        <a href="#"><img src="assets/images/cart/cart-1.jpg" alt="" /></a>
+                        <a href="#" class="ml-4"><img width="140" height="140" src="<?php echo get_img('products/' . $index['image']); ?>" alt="" /></a>
                     </td>
-                    <td class="product-name"><a href="#">Simple Black T-Shirt</a></td>
-                    <td class="product-price-cart"><span class="amount">$260.00</span></td>
+                    <td class="product-name"><a href="#"><?php echo $index['name']; ?></a></td>
+                    <td class="product-price-cart"><span class="amount"><?php echo $index['price']; ?></span></td>
                     <td class="product-quantity pro-details-quality">
                         <div class="cart-plus-minus">
-                            <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" />
+                            <input class="cart-plus-minus-box" type="text" name="qtybutton" value="<?php echo $index['quantity']; ?>" />
                         </div>
                     </td>
-                    <td class="product-subtotal">$110.00</td>
+                    <td class="product-subtotal"><?php echo GetCartProductPrice($index['price'], $index['sale']); ?></td>
                     <td class="product-remove">
-                        <a href="#"><i class="icon_close"></i></a>
+                        <a href="<?php echo URL . 'front/shop/remove_order?o_id='. $index['order_id']. '&p_id='.$index['id']; ?>"><i class="icon_close"></i></a>
                     </td>
                 </tr>
+            <?php endforeach; ?>
             </tbody>
         </table>
     </div>
@@ -46,3 +49,4 @@
         </div>
     </div>
 </form>
+<?php endif; ?>

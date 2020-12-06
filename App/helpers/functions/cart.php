@@ -16,7 +16,6 @@ function GetCartTotal()
     global $cart_handler;
     // Return user cart total
     return $cart_handler->GetCartTotal();
-    // return $cart_handler->GetCartTotal();
 }
 
 /**
