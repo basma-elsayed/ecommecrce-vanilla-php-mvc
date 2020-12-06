@@ -5,7 +5,7 @@
         <table>
             <thead>
                 <tr>
-                    <th>Image</th>
+                    <th>Product Image</th>
                     <th>Product Name</th>
                     <th>Until Price</th>
                     <th>Qty</th>
