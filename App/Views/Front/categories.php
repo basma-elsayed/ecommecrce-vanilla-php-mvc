@@ -2,18 +2,18 @@
 /**
  * All Categories View
  */
-
 get_front_file("header");
 ?>
 <!-- Start breadcrumb -->
 <div class="breadcrumbs">
     <?php get_front_file("shop/breadcrumb") ?>
+    
 </div>
 <!-- End breadcrumb -->
 <!-- Start Categories Body -->
 <div class="shop-area pt-120 pb-120">
     <div class="container">
-        
+        <?php flash('order_action'); ?>
         <div class="row flex-row-reverse">
 
             <!-- Start Products -->

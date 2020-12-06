@@ -1,27 +1,23 @@
 <?php
 /**
  * 
- * Login users
- * 
+ * Register new Admin
  */
 // Get Header
-get_front_file( 'header' );
+get_auth_file( 'header' );
 ?>
 <!-- Start Registration -->
 <div class="login-register-area pt-115 pb-120">
     <div class="container">
         <div class="d-flex full-height p-v-15 flex-column justify-content-between">
-            <!-- Start Login -->
             <div class="container">
-                <div class="row">
-                    <div class="col-10 col-lg-6 mx-auto my-auto">
-                        <div class="card mt-5">
+                <div class="row align-items-center">
+                    <div class="col-md-5">
+                        <div class=""><?php flash( 'registerd_faild' ); ?></div>
+                        <div class="card">
                             <div class="card-body">
-                                <h3 class="mb-4 font-weight-normal">Please Fill The Form to Login!</h3>
-                            <?php UserNotExist( $data ); ?>
-                            <?php flash( 'registerd_success' ); ?>
+                                <h2 class="m-t-20">Hi author, Sign In!</h2>
                                 <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST">
-                                    
                                     <div class="form-group">
                                         <label class="font-weight-semibold" for="name">Name:</label>
                                         <input 
@@ -35,15 +31,13 @@ get_front_file( 'header' );
                                         <div class="valid-feedback"><?php echo error_msg( $data , 'name_success' );?></div>
                                     
                                     </div>
-
                                     <div class="form-group">
                                         <label class="font-weight-semibold" for="email">Email:</label>
                                         <input 
                                             type="email" 
                                             name="email" 
                                             value="<?php echo GetInputValue( $data, 'email' ) ; ?>" 
-                                            id="email"
-                                            auto-complete="user-email"
+                                            id="email" 
                                             class="form-control <?php echo error_class( $data , 'email_err' ); ?>" 
                                             placeholder="Email">
                                         <div class="invalid-feedback"><?php echo error_msg( $data , 'email_err' ); ?></div>
@@ -56,35 +50,48 @@ get_front_file( 'header' );
                                             type="password" 
                                             name="password" 
                                             value="<?php echo GetInputValue( $data, 'password' ) ; ?>" 
-                                            auto-complete="user-password"
                                             class="form-control <?php echo error_class( $data , 'password_err' ); ?>" 
                                             id="password" 
                                             placeholder="Password">
                                         <div class="invalid-feedback"><?php echo error_msg( $data , 'password_err' ); ?></div>
                                         <div class="valid-feedback"><?php echo error_msg( $data , 'password_success' ); ?></div>
                                     </div>
-                                    
+                                    <div class="form-group">
+                                        <label class="font-weight-semibold" for="confirm_password">Confirm Password:</label>
+                                        <input 
+                                            type="password" 
+                                            name="confirm_password" 
+                                            value="<?php echo GetInputValue( $data, 'confirm_password' ) ; ?>" 
+                                            class="form-control <?php echo error_class( $data , 'confirm_password_err' ); ?>" 
+                                            id="confirm_password" 
+                                            placeholder="Confirm Password">
+                                        <div class="invalid-feedback"><?php echo error_msg( $data , 'confirm_password_err' ); ?></div>
+                                        <div class="valid-feedback"><?php echo error_msg( $data , 'confirm_password_success' ); ?></div>
+                                    </div>
                                     <div class="form-group">
                                         <div class="d-flex align-items-center justify-content-between p-t-15">
                                             <span class="font-size-13 text-muted">
-                                                <span>Don't have an account?</span>
-                                                <a class="small" href="<?php echo URL; ?>front/auth/register"> Signup</a>
+                                                Already have an account? 
+                                                <a class="small" href="<?php echo URL; ?>front/auth/admin_login"> Signup</a>
                                             </span>
-                                            <button type="submit" class="btn btn-success">Login</button>
+                                            <button type="submit" class="btn btn-success">Sign In</button>
                                         </div>
                                         
                                     </div>
                                 </form>
                             </div>
                         </div>
-                        <a href="<?php echo URL . 'front/auth/admin_login';  ?>" class="btn btn-link">Login as a Author</a>
+                        <a href="<?php echo URL .'front/auth/register'; ?>" class="btn btn-link">Sign in as a user</a>
+                    </div>
+                    <div class="offset-md-1 col-md-6 d-none d-md-block">
+                        <img class="img-fluid" src='<?php echo get_img( 'login-2.png' ); ?>' alt="Company presneter" />
                     </div>
                 </div>
             </div>
-            <!-- End Login -->
         </div>
     </div>
 </div>
+<!-- End Registration -->
 <?php
 // Get Footer
-get_front_file( "footer" );
+get_auth_file( 'footer' );

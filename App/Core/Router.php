@@ -62,6 +62,7 @@ class Router
             'Front' => [
                 'Auth'          => \Controllers\Front\Auth::class,
                 'Shop'          => \Controllers\Front\Shop::class,
+                'Cart'          => \Controllers\Front\Cart::class,
                 'Categories'    => \Controllers\Front\Categories::class
             ],
         ];

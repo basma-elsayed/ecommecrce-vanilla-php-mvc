@@ -1,13 +1,10 @@
 <?php
 /**
- * 
- * Login users
- * 
+ * Login admin page
  */
 // Get Header
-get_front_file( 'header' );
+get_auth_file( "header" );
 ?>
-<!-- Start Registration -->
 <div class="login-register-area pt-115 pb-120">
     <div class="container">
         <div class="d-flex full-height p-v-15 flex-column justify-content-between">
@@ -17,7 +14,7 @@ get_front_file( 'header' );
                     <div class="col-10 col-lg-6 mx-auto my-auto">
                         <div class="card mt-5">
                             <div class="card-body">
-                                <h3 class="mb-4 font-weight-normal">Please Fill The Form to Login!</h3>
+                                <h3 class="mb-4 font-weight-normal">Login as Author!</h3>
                             <?php UserNotExist( $data ); ?>
                             <?php flash( 'registerd_success' ); ?>
                                 <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST">
@@ -68,7 +65,7 @@ get_front_file( 'header' );
                                         <div class="d-flex align-items-center justify-content-between p-t-15">
                                             <span class="font-size-13 text-muted">
                                                 <span>Don't have an account?</span>
-                                                <a class="small" href="<?php echo URL; ?>front/auth/register"> Signup</a>
+                                                <a class="small" href="<?php echo URL; ?>front/auth/admin_register"> Signup</a>
                                             </span>
                                             <button type="submit" class="btn btn-success">Login</button>
                                         </div>
@@ -77,7 +74,7 @@ get_front_file( 'header' );
                                 </form>
                             </div>
                         </div>
-                        <a href="<?php echo URL . 'front/auth/admin_login';  ?>" class="btn btn-link">Login as a Author</a>
+                        <a href="<?php echo URL .'front/auth/login'; ?>" class="btn btn-link">Login as a user</a>
                     </div>
                 </div>
             </div>
@@ -87,4 +84,4 @@ get_front_file( 'header' );
 </div>
 <?php
 // Get Footer
-get_front_file( "footer" );
+get_auth_file( "footer" );

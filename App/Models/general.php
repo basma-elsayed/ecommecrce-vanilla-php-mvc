@@ -143,12 +143,6 @@ class general
         self::$db->prepare( "SELECT id,size FROM products" );
 
         return $sizes = self::$db->FetchAssoc();
-
-        // print_r($sizes);
-
-        // $size = '40,41,42';
-
-        // $size = explode( ',', $size );
     }
 
 

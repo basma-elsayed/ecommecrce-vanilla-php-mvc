@@ -11,3 +11,5 @@ require_once dirname(__DIR__) . '/helpers/functions/url.php';
 require_once dirname(__DIR__) . '/helpers/functions/admin.php';
 // front functions
 require_once dirname(__DIR__) . '/helpers/functions/front.php';
+// Cart functions
+require_once dirname(__DIR__) . '/helpers/functions/cart.php';

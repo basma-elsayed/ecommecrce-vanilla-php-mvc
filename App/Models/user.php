@@ -17,10 +17,10 @@ class user
     }
 
     // Check is user name exists
-    public function NameExists( string $name )
+    public function NameExists( string $name, string $table = 'users' )
     {
         // Prepare
-        $this->db->prepare( 'SELECT name FROM users WHERE name = :name' );
+        $this->db->prepare( "SELECT name FROM $table WHERE name = :name" );
         // Bind
         $this->db->bind( ':name' , $name );
 
@@ -33,10 +33,10 @@ class user
     }
 
     // Check is user email exists
-    public function EmailExists( string $email )
+    public function EmailExists( string $email, string $table = 'users' )
     {
         // Prepare
-        $this->db->prepare( 'SELECT email FROM users WHERE email = :email' );
+        $this->db->prepare( "SELECT email FROM $table WHERE email = :email" );
         
         // Bind
         $this->db->bind( ':email' , $email );
@@ -80,17 +80,17 @@ class user
     }
 
     // Check is user data [ name , email, password ]
-    public function ValidateUser( array $data )
+    public function ValidateUser( array $data, string $table = 'users' )
     {
         // Prepare
-        $this->db->prepare( 'SELECT * 
+        $this->db->prepare( "SELECT * 
                             FROM 
-                                users 
+                                $table 
                             WHERE 
                                 name = :name 
                             AND 
                                 email = :email 
-                            ' );
+                            " );
         // Bind
         $this->db->bind( ':name' , $data['name'] );
         $this->db->bind( ':email' , $data['email'] );
@@ -162,11 +162,11 @@ class user
 
 
     // Insert new user
-    public function InsertNewUSer( $data ){
+    public function InsertNewUser( $data, string $table = 'users' ){
 
         // Prepare
-        $this->db->prepare( 'INSERT INTO 
-                                users (
+        $this->db->prepare( "INSERT INTO 
+                                $table  (
                                     name,
                                     password,
                                     email
@@ -178,14 +178,13 @@ class user
                                     :password,
                                     :email
                                 )
-                            ' );
+                            " );
         // Bind
         $this->db->bind( ':name', $data['name'] );
         $this->db->bind( ':password', $data['password'] );
         $this->db->bind( ':email', $data['email'] );
         
         /**
-         * Return Single Data on success
          * Return TRUE on success FALSE on Faliure
          */
         $row = $this->db->execute();
@@ -222,7 +221,7 @@ class user
         
     }
 
-    // register session
+    // register Author [ admin ] session
     public function CreateUserSession($user)
     {
         $_SESSION['id']                = $user->id;
@@ -236,6 +235,15 @@ class user
         $_SESSION['group_id']          = $user->group_id;
         $_SESSION['trust_status']      = $user->trust_status;
         $_SESSION['reg_status']        = $user->reg_status;
+    }
+    
+    // register Customer session
+    public function CreateCustomerSession($user)
+    {
+        $_SESSION['id']                = $user->id;
+        $_SESSION['name']              = $user->name;
+        $_SESSION['password']          = $user->password;
+        $_SESSION['email']             = $user->email;
     }
 
 }

@@ -37,4 +37,12 @@
                 <?php get_front_file( "header/header-small-device" ); ?>
             </div>
             <!-- End header-small-device -->
+
+            <!-- Start Mobile menu -->
+            <?php get_front_file( "header/mobile-menu" ); ?>
+            <!-- End Mobile menu -->
+
+            <!-- Start mini cart -->
+            <?php get_front_file( "header/mini-cart" ); ?>
+            <!-- End mini cart -->
         </header>

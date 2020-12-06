@@ -89,6 +89,7 @@
                                 </ul>
                             </li>
                             <li><a href="contact.html">CONTACT </a></li>
+                            <li><a href="<?php echo URL .'front/auth/logout' ?>">Logout</a></li>
                         </ul>
                     </nav>
                 </div>

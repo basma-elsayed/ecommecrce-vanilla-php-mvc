@@ -105,6 +105,7 @@ class Uploader
     {
         self::$data                 = $data;
         self::$gallery              = $gallery;
+        $product_gallery            = [];
 
         // Loop through Gallery
         for ($i = 0; $i < count($gallery['error']); $i++): 

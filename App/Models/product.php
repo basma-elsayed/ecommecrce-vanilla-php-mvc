@@ -16,6 +16,7 @@ class product
     {
         $this->dbh = new Database();
         $this->tabel = 'products';
+        $this->orders = 'orders';
     }
 
     // Insert new product

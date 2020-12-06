@@ -3996,18 +3996,19 @@ textarea:focus {
 }
 
 .sidebar-cart-active .sidebar-cart-all .cart-content ul li .cart-delete a {
-    display: block;
-    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 20px;
-    line-height: 17px;
-    overflow: hidden;
     width: 20px;
-    text-align: right;
-    color: #000000
+    border: 1px solid #ff2f2f;
+    margin-left: 5px;
+    text-align: center;
 }
 
 .sidebar-cart-active .sidebar-cart-all .cart-content ul li .cart-delete a:hover {
-    color: #ff2f2f
+    color: #ffffff;
+    background-color: #ff2f2f;
 }
 
 .sidebar-cart-active .sidebar-cart-all .cart-content .cart-total {
@@ -9131,10 +9132,11 @@ textarea:focus {
 }
 
 .single-product-wrap .product-content-wrap-2 .pro-add-to-cart {
-    margin: 14px 0 0
+    margin: 14px 0 0;
+    padding-bottom: 18px;
 }
 
-.single-product-wrap .product-content-wrap-2 .pro-add-to-cart button {
+.single-product-wrap .product-content-wrap-2 .pro-add-to-cart a {
     border: none;
     font-weight: bold;
     color: #ffffff;
@@ -9147,7 +9149,7 @@ textarea:focus {
     transition: all .3s ease 0s
 }
 
-.single-product-wrap .product-content-wrap-2 .pro-add-to-cart button:hover {
+.single-product-wrap .product-content-wrap-2 .pro-add-to-cart a:hover {
     background-color: #ff2f2f
 }
 
@@ -9155,7 +9157,7 @@ textarea:focus {
     margin: 4px 0 0
 }
 
-.single-product-wrap .product-content-wrap-2.product-content-wrap-2-modify .pro-add-to-cart button {
+.single-product-wrap .product-content-wrap-2.product-content-wrap-2-modify .pro-add-to-cart a {
     font-size: 13px;
     padding: 4px 20px 4px
 }

@@ -34,8 +34,8 @@
                     </div>
                     <div class="same-style-2 same-style-2-font-inc header-cart">
                         <a class="cart-active" href="#">
-                            <i class="icon-basket-loaded"></i><span class="pro-count green">02</span>
-                            <span class="cart-amount">$2,435.30</span>
+                            <i class="icon-basket-loaded"></i><span class="pro-count green"><?php echo GetCartCount(); ?></span>
+                            <span class="cart-amount"><?php echo GetCartTotal(); ?></span>
                         </a>
                     </div>
                 </div>

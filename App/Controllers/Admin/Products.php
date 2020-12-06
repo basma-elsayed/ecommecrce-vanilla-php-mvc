@@ -71,7 +71,7 @@ class Products extends \Core\Controller
             $errors                         += $productGallery['errors'];
 
             // Optional Fields
-            $optional_fields = [ 'sale_price', 'gallery' ];
+            $optional_fields = [ 'sale_price', 'gallery', 'gallery_arr' ];
 
             // Validate inputs
             foreach( $data['post'] as $input => $value ):
@@ -101,11 +101,14 @@ class Products extends \Core\Controller
             if( $errors === 0 ):
 
                 if( $this->product_db->insert( $data['post'] , $_SESSION['id'] ) ){
-
                     // image path
                     $img_path = IMGS . 'products/';
                     Uploader::CompleteUploadingProccess( $img_path );
-                    Uploader::CompleteUploadingGalleryProccess($data['post']['gallery_arr'], $img_path);
+
+                    // If user uploaded a product gallery => uploade them to server
+                    if( ! empty($data['post']['gallery_arr']) ){
+                        Uploader::CompleteUploadingGalleryProccess($data['post']['gallery_arr'], $img_path);
+                    }
                     // Insert Products into tabel products
                     // set flash msg
                     flash( 'products_actions', 'Prodcut <strong>'. $data['post']['name'] .'</strong> was addedd successfully!', 'success' );

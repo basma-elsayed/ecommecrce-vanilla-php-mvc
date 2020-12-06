@@ -7,9 +7,11 @@
                     <div class="single-product-wrap mb-35">
                         <div class="product-img product-img-zoom mb-15">
                             <a href="product-details.html">
-                                <img src="<?php echo get_img('products/product-14.jpg'); ?>" alt="" />
+                                <img src="<?php echo get_img('products/' . $product['image']); ?>" alt="" />
                             </a>
-                            <span class="pro-badge left bg-red">-20%</span>
+                            <?php if( $product['sale'] != 0  ): ?>
+                            <span class="pro-badge left bg-red">- <?php echo ceil( ( ( $product['price'] - $product['sale'] ) / $product['price'] ) * 100 ) . ' %'; ?></span>
+                            <?php endif; ?>
                             <div class="product-action-2 tooltip-style-2">
                                 <button title="Wishlist"><i class="icon-heart"></i></button>
                                 <button title="Quick View" data-toggle="modal" data-target="#exampleModal"><i class="icon-size-fullscreen icons"></i></button>
@@ -29,8 +31,12 @@
                             </div>
                             <h3><a href="product-details.html"><?php echo $product['name']; ?></a></h3>
                             <div class="product-price-2">
-                                <span class="new-price">$35.45</span>
+                                <?php if( $product['sale'] != 0  ): ?>
+                                <span class="new-price"><?php echo $product['sale']; ?></span>
                                 <span class="old-price"><?php echo $product['price']; ?></span>
+                                <?php else: ?>
+                                <span class="new-price"><?php echo $product['price']; ?></span>
+                                <?php endif; ?>
                             </div>
                         </div>
                         <div class="product-content-wrap-2 product-content-position text-center">
@@ -46,11 +52,16 @@
                             </div>
                             <h3><a href="product-details.html"><?php echo $product['name']; ?></a></h3>
                             <div class="product-price-2">
-                                <span class="new-price">$35.45</span>
+                                <?php if( $product['sale'] != 0  ): ?>
+                                <span class="new-price"><?php echo $product['sale']; ?></span>
                                 <span class="old-price"><?php echo $product['price']; ?></span>
+                                <?php else: ?>
+                                <span class="new-price"><?php echo $product['price']; ?></span>
+                                <?php endif; ?>
                             </div>
                             <div class="pro-add-to-cart">
-                                <button title="Add to Cart">Add To Cart</button>
+                                <a href="<?php echo URL . 'front/shop/add_product?p_id='. $product['id']; ?>">Add To Cart</a>
+                                <!-- <button title="Add to Cart">Add To Cart</button> -->
                             </div>
                         </div>
                     </div>
