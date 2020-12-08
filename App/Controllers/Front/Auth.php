@@ -129,7 +129,7 @@ class Auth extends \Core\Controller
      * login user
      */
     public function login()
-    {       
+    {     
         // init data array
         $data = [];
 
@@ -203,10 +203,7 @@ class Auth extends \Core\Controller
 
                 endif;
             endforeach;
-        // echo '<pre>';
-        // print_r($user);
-        // echo '</pre>';
-        // die();
+
             /**
              * Insert new user into Database
              * $errors === 0 ? means loop above did not catch any error
@@ -456,7 +453,16 @@ class Auth extends \Core\Controller
 
         session_destroy();
 
+        // Delete cookies from browser
+        if (ini_get("session.use_cookies")) { 
+            $params = session_get_cookie_params(); 
+            setcookie(session_name(), '', time() - 42000, 
+                $params["path"], $params["domain"], 
+                $params["secure"], $params["httponly"] 
+            ); 
+        } 
+
+        // Redirct back to login page
         redirect( 'front/auth/login' );
     }
-
 }

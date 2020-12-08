@@ -1,5 +1,6 @@
 <?php ob_start(); ?>
-<?php if( GetCartProducts() ): ?>
+<?php flash( 'cart_actions' ); ?>
+<?php if( $data['cart_products'] ): ?>
 <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST">
     <div class="table-content table-responsive cart-table-content">
         <table>
@@ -14,7 +15,7 @@
                 </tr>
             </thead>
             <tbody>
-            <?php foreach( GetCartProducts() as $index ): ?>
+            <?php foreach( $data['cart_products'] as $index ): ?>
                 <tr>
                     <td class="product-thumbnail">
                         <a href="#" class="ml-4"><img width="140" height="140" src="<?php echo get_img('products/' . $index['image']); ?>" alt="" /></a>
@@ -23,8 +24,23 @@
                     <td class="product-price-cart"><span class="amount"><?php echo $index['price']; ?></span></td>
                     <td class="product-quantity pro-details-quality">
                         <div class="cart-plus-minus">
-                            <input class="cart-plus-minus-box" type="text" name="qtybutton" value="<?php echo $index['quantity']; ?>" />
+                            <!-- Quantity -->
+                            <input 
+                                class="cart-plus-minus-box"
+                                type="text"
+                                name='o_<?php echo $index['order_id']; ?>[quantity]'
+                                value="<?php echo isset( $data['o_'.$index['order_id']]['q'] ) ? $data['o_'.$index['order_id']]['q'] : $index['quantity']; ?>"/>
                         </div>
+                        <!-- Product id -->
+                        <input 
+                            type="hidden"
+                            name="o_<?php echo $index['order_id']; ?>[product_id]"
+                            value="<?php echo $index['id']; ?>" />
+                        <!-- Order id -->
+                        <input 
+                            type="hidden"
+                            name="o_<?php echo $index['order_id']; ?>[order_id]"
+                            value="<?php echo $index['order_id']; ?>" />
                     </td>
                     <td class="product-subtotal"><?php echo GetCartProductPrice($index['price'], $index['sale']); ?></td>
                     <td class="product-remove">
@@ -39,10 +55,10 @@
         <div class="col-lg-12">
             <div class="cart-shiping-update-wrapper">
                 <div class="cart-shiping-update">
-                    <a href="#">Continue Shopping</a>
+                    <a href="<?php echo URL. 'front/categories' ?>">Continue Shopping</a>
                 </div>
                 <div class="cart-clear">
-                    <button>Update Cart</button>
+                    <button type="submit">Update Cart</button>
                     <a href="#">Clear Cart</a>
                 </div>
             </div>

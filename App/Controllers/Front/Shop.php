@@ -117,11 +117,10 @@ class Shop extends \Core\Controller
         $result = $this->cart->OrderExist( $params['o_id'], $params['p_id'] );
         if( $result && $result['status'] == 0 ):
             // delete order from order table
-            $con = "WHERE order_id = ".$params['o_id']." AND product_id = ".$params['p_id']." AND status = '0' ";
-            $delete = $this->general_db->remove( 'orders', $con );
+            $condition = "WHERE order_id = ".$params['o_id']." AND product_id = ".$params['p_id']." AND status = '0' ";
+            $delete = $this->general_db->remove( 'orders', $condition );
             // If success to delete the order
             if( $delete > 0 ){
-                echo 'Order Deleted';
                 // Flash success msg
                 flash( 'order_action', 'Product Deleted successfully', 'success' );
                 // redirect back to prev page
@@ -129,20 +128,19 @@ class Shop extends \Core\Controller
             }
             // If Faild to delete the order
             else{
-                echo 'failde to Deleted Order';
                 // Flash faild msg
                 flash( 'order_action', 'Faild to Deleted order, Plaese try later', 'danger' );
                 // redirect back to prev page
                 redirect('front/categories');
             }
-            /**
-             * order not found
-             *  something weird happing or someone try to hack
-             */
-            else:
-                flash( 'order_action', 'Order Not Found', 'danger' );
-                // redirect back to prev page
-                redirect('front/categories');
+        /**
+         * order not found
+         *  something weird happing or someone try to hack
+         */
+        else:
+            flash( 'order_action', 'Order Not Found', 'danger' );
+            // redirect back to prev page
+            redirect('front/categories');
         endif;
     }
 
