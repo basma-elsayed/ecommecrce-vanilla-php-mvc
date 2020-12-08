@@ -14,7 +14,7 @@ get_front_file("header");
             <div class="row">
                 <!-- Start Cart Products -->
                 <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                    <?php get_front_file("cart/body"); ?>
+                    <?php get_front_file("cart/body", $data); ?>
                 </div>
                 <!-- End Cart Products -->
 

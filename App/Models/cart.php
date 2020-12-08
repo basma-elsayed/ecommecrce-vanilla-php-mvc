@@ -51,11 +51,11 @@ class cart
     }
 
     /**
-     * Check Product exists in cart using user id
+     * Check Product exists in cart using user id & product_id
      * @param int c_id = customer id
      * @param int product_id = product id
      */
-    public function ProductInCart( $c_id, $product_id )
+    public function ProductInCart( $c_id, $product_id, $status = 0 )
     {
         // Prepare
         $this->dbh->prepare( "SELECT 
@@ -68,6 +68,8 @@ class cart
                                 c_id = $c_id
                             AND
                                 product_id = $product_id
+                            AND
+                                status = $status
                             " );
         // Execute
         $exc = $this->dbh->execute();
@@ -126,7 +128,7 @@ class cart
      * increase / decrease single product count 
      * add / delete more than 1 of a single product
      */
-    public function UpdateExistOrder(array $data , array $old_order)
+    public function UpdateExistOrder(array $data , array $old_order = [] )
     {
         // Prepare
         $this->dbh->prepare( "UPDATE
@@ -137,11 +139,18 @@ class cart
                             WHERE
                                 order_id = :order_id
                             " );
-
+        
+        // amount var
+        $amount = empty( $old_order ) ? $data['amount'] : $old_order['amount'] + $data['amount']; 
+        // quantity var
+        $quantity = empty( $old_order ) ? $data['quantity'] : $old_order['quantity'] + (isset($data['quantity']) ? $data['quantity'] : '1');
+        // quantity var
+        $order_id = empty( $old_order ) ? $data['order_id'] : $old_order["order_id"];
+        
         // Bind
-        $this->dbh->bind( 'amount', $old_order['amount'] + $data['amount'] );
-        $this->dbh->bind( 'quantity', $old_order['quantity'] + (isset($data['quantity']) ? $data['quantity'] : '1') );
-        $this->dbh->bind( 'order_id', $old_order["order_id"] );
+        $this->dbh->bind( 'amount', $amount );
+        $this->dbh->bind( 'quantity', $quantity );
+        $this->dbh->bind( 'order_id', $order_id );
         
         // Execute
         $exec = $this->dbh->execute();
@@ -186,8 +195,7 @@ class cart
     }
 
     /**
-     * Delete order from order table
-     * 
+     * Order exist in orders table
      */
     public function OrderExist( $order_id, $product_id )
     {
@@ -206,11 +214,11 @@ class cart
                                 c_id = :c_id
                             " );
                                
-        //  c_id = $this->user_id,
         // Bind
         $this->dbh->bind( 'c_id', $this->user_id );
         $this->dbh->bind( 'order_id', $order_id );
         $this->dbh->bind( 'product_id', $product_id );
+        
         // Execute
         $this->dbh->execute();
 
